@@ -2,6 +2,8 @@
 
 **Author:** Daniel Rodriguez III - Technical Fraud Analyst
 
+### Executive Summary: Apple SDS Digital Fraud Analysis
+
 This project delivers a robust, end-to-end framework for detecting and decisioning Account Takeover (ATO) fraud within Apple's digital goods ecosystem. Designed for the Apple SDS Digital Goods Technical Fraud Analyst role, the solution prioritizes a "friction-right" balance, ensuring high-precision fraud detection while minimizing false positives to safeguard the legitimate customer experience.
 
 #### 1. Business Problem & Strategic Context
