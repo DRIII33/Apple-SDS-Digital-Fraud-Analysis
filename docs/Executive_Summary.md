@@ -39,10 +39,10 @@ Apple's Services segment faces increasing threats from ATO fraud, typically exec
     *   **Model:** Employed a `RandomForestClassifier` with `class_weight='balanced'` to handle the inherent class imbalance in fraud data.
     *   **Decisioning Engine:** Developed a logic to translate model-predicted fraud probabilities into operational decisions: 'block' (high confidence fraud), 'review' (gray area), and 'approve' (low risk).
     *   **Optimization:** Adjusted decision thresholds based on Precision-Recall curve analysis to significantly improve fraud recall, demonstrating:
-        *   Recall (Blocked Fraud): ~83.05%
-        *   Recall (Blocked + Reviewed Fraud): ~88.67%
-        *   False Positive Rate (Friction Index - Block/Review): ~7.58%
-        *   Estimated Revenue Protected: ~$98,376.73 (for the simulated dataset).
+        *   Recall (Blocked Fraud): 100.00%
+        *   Recall (Blocked + Reviewed Fraud): 100.00%
+        *   False Positive Rate (Friction Index - Block/Review): 5.19%
+        *   Estimated Revenue Protected: $104,102.65 (for the simulated dataset).
 
 **Phase 5: Looker Studio Dashboard Integration (Conceptual & Guide)**
 *   **Objective:** Design a Looker Studio dashboard for continuous monitoring and visualization of fraud KPIs and patterns.
