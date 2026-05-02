@@ -1,5 +1,7 @@
 ### EDA Summary and Key Findings
 
+**Author:** Daniel Rodriguez III - Technical Fraud Analyst
+
 This document summarizes the key findings from the Exploratory Data Analysis (EDA) conducted on the synthetic `transactions` and `users` datasets. The EDA focused on validating data quality, understanding feature distributions, and confirming the successful enrichment of geolocation data and fraud patterns.
 
 ### 1. Data Quality and Types
