@@ -85,7 +85,15 @@ FROM
     *   **Type:** Time Series Chart
     *   **Dimension:** `transaction_date`
     *   **Metric:** `SAFE_DIVIDE(fraud_txns, total_txns)` (Calculated Field in Looker Studio, Type: `Number -> Percent`)
-    *   **Caption:** Visualizes daily fluctuations in the fraud rate, helping to identify trends, seasonal patterns, or sudden spikes. Addresses the need to "Track operational and business metrics."
+    *   **Date Range Settings:**
+        *   Date Range Dimension: `transaction_date`
+        *   Default Date Range: Auto
+    *   **Visualization Notes:**
+        *   Axis: Show X-axis title (Transaction Date), Show Y-axis title (Daily Fraud Rate).
+        *   Grid: Hide grid lines for a cleaner look.
+        *   Series: Enable "Show points" for individual daily values.
+        *   Trendline: Add a 'Linear' trendline to observe long-term changes.
+    *   **Caption:** This time series chart visualizes the daily fluctuations in the fraud rate, helping to identify trends, seasonal patterns, or sudden spikes in fraudulent activity. An upward trend might signal a need for immediate investigation and system adjustments.
 
 #### **PAGE 2: User & Device Anomalies**
 
@@ -100,13 +108,13 @@ FROM
         *   `Fraudulent Transactions Count`: `SUM(CASE WHEN is_fraud = 1 THEN 1 ELSE 0 END)` (Calculated Field)
         *   `Total Spend`: `amount` (Aggregation: `SUM`)
     *   **Sorting:** `Fraudulent Transactions Count` (Descending)
-    *   **Caption:** Identifies users with the highest number of fraudulent transactions and their total spending, guiding investigations into potential fraud rings or compromised accounts.
+    *   **Caption:** Identifies the users associated with the highest number of fraudulent transactions and their total spending, guiding investigations into potential fraud rings or compromised accounts.
 
 *   **CHART 8: Excessive Device Sharing**
     *   **Type:** Bar Chart
     *   **Dimension:** `device_id`
     *   **Metric:** `user_id` (Aggregation: `COUNT_DISTINCT`)
-    *   **Filtering:** Exclude null/unknown `device_id`s; Filter for `COUNT_DISTINCT(user_id) > 5`.
+    *   **Filtering:** Exclude null/unknown `device_id` values (if present); Filter for `COUNT_DISTINCT(user_id) > 5`.
     *   **Sorting:** `user_id` (COUNT_DISTINCT, Descending)
     *   **Caption:** Displays device IDs used by an unusually high number of distinct users, indicating potential botnet activity or fraud rings.
 
@@ -120,9 +128,14 @@ FROM
     *   **Type:** Geo Chart (Filled Map)
     *   **Geo Dimension:** `transaction_ip_country` (Set Field Type to `Geo -> Country`)
     *   **Drill-Down Dimension:** `transaction_ip_city` (Set Field Type to `Geo -> City`)
-    *   **Metric:** `SAFE_DIVIDE(SUM(is_fraud), COUNT(transaction_id))` (Calculated Field, Type: `Number -> Percent`)
-    *   **Color:** Sequential color scale based on Fraud Rate (e.g., green to red).
-    *   **Caption:** Visualizes fraud rates by IP country and city, highlighting geographical hotspots where fraudulent activities are more prevalent. Drill-down allows granular analysis.
+    *   **Metric:** `SAFE_DIVIDE(SUM(is_fraud), COUNT(transaction_id))` (Calculated Field, Type: `Number -> Percent`, Aggregation: `AVG`)
+    *   **Visualization Notes:**
+        *   **Drill-down:** Enable Drill-Down and add `transaction_ip_city` as the next drill-down dimension.
+        *   **Color:** Use a sequential color scale (e.g., from light to dark red or green to red) based on the `Fraud Rate (%)` metric. Darker shades should indicate higher fraud rates.
+        *   **Zoom Area:** Set default zoom to 'World'.
+        *   **Tooltips:** Ensure `transaction_ip_country` (and `transaction_ip_city` on drill-down), `Fraud Rate (%)`, `Total Transactions`, and `Fraudulent Transactions Count` are visible.
+        *   **Borders:** Optionally enable borders for countries/cities.
+    *   **Caption:** This Geo Chart visualizes the fraud rate by IP country and city, highlighting geographical hotspots where fraudulent activities are more prevalent. This insight is crucial for implementing region-specific fraud rules or focusing investigative efforts. The drill-down functionality allows for a more granular view from country to city level.
 
 *   **CHART 10: Cross-Country Transactions Analysis**
     *   **Type:** Table or Bar Chart
@@ -139,10 +152,7 @@ FROM
 ### **4. Business Problem & Job Description Alignment: Dashboard Insights**
 
 The dashboard robustly addresses the core business problem of ATO fraud and fulfills the requirements of the Apple SDS Digital Goods Technical Fraud Analyst role:
-
 *   **Addresses ATO Fraud & Friction-Right Balance:**
     *   **`Cross-Country Transactions Analysis` (Chart 10)**: Directly surfaces ATO indicators where transaction origin differs from user registration.
     *   **`False Positive Rate` (Chart 4)**: Quantifies customer friction, ensuring the system maintains a "friction-right" balance crucial for Apple's user experience.
     *   **`System Block Rate` (Chart 2) & `System Review Rate` (Chart 3)**: Reflect the system's automated responses to suspected fraud, directly showcasing the ML decisioning layer in action.
-
-*   **
